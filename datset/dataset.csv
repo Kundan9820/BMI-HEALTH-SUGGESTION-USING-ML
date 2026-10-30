@@ -1,0 +1,11 @@
+Disease,Symptom_1,Symptom_2,Symptom_3,Symptom_4,Symptom_5
+Common Cold,continuous_sneezing,chills,fatigue,cough,high_fever
+Migraine,headache,nausea,blurred_and_distorted_vision,acidity,vomiting
+Malaria,chills,vomiting,high_fever,sweating,headache
+Typhoid,chills,vomiting,high_fever,headache,abdominal_pain
+Dengue,skin_rash,chills,joint_pain,vomiting,fatigue
+Gastroenteritis,vomiting,sunken_eyes,dehydration,diarrhoea,abdominal_pain
+Hypertension,headache,chest_pain,dizziness,loss_of_balance,fatigue
+Diabetes,fatigue,weight_loss,restlessness,blurred_and_distorted_vision,excessive_hunger
+Pneumonia,chills,fatigue,cough,high_fever,breathlessness
+Allergy,continuous_sneezing,shivering,chills,watering_from_eyes,skin_rash

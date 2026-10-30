@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Symptom Intake — Live Assessment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-left">
+      <span class="eyebrow">Patient-Reported Symptom Intake</span>
+      <h1>Live Assessment Desk</h1>
+    </div>
+    <div class="masthead-right">
+      <div class="clock" id="clock">--:--:--</div>
+      <div class="clock-label">local time</div>
+    </div>
+  </header>
+
+  {% if not data_ready %}
+  <div class="banner-error">
+    <strong>Dataset not loaded.</strong>
+    Place <code>dataset.csv</code>, <code>symptom_Description.csv</code> and
+    <code>symptom_precaution.csv</code> inside the <code>datset/</code> folder,
+    then restart the server.<br>
+    <span class="banner-detail">{{ load_error }}</span>
+  </div>
+  {% endif %}
+
+  <main class="desk">
+
+    <!-- LEFT: intake form -->
+    <section class="intake" aria-label="Symptom entry">
+      <div class="panel-label">01 — Enter symptoms</div>
+
+      <div class="input-row">
+        <input type="text" id="symptomInput" placeholder="Type a symptom, e.g. headache"
+               autocomplete="off" {{ '' if data_ready else 'disabled' }}>
+        <button id="addBtn" type="button" {{ '' if data_ready else 'disabled' }}>Add</button>
+      </div>
+
+      <ul class="suggestions" id="suggestions" hidden></ul>
+
+      <div class="chip-field" id="chipField" aria-live="polite">
+        <span class="chip-placeholder" id="chipPlaceholder">No symptoms added yet</span>
+      </div>
+
+      <button class="clear-link" id="clearBtn" type="button" hidden>Clear all symptoms</button>
+
+      <div class="hint">
+        Matches are checked instantly — no need to submit. Add three or more
+        symptoms for the most reliable read.
+      </div>
+    </section>
+
+    <!-- RIGHT: live report slip -->
+    <section class="slip-holder" aria-label="Assessment result">
+      <div class="panel-label">02 — Live report</div>
+
+      <div class="slip" id="slip">
+        <div class="slip-head">
+          <span>ASSESSMENT SLIP</span>
+          <span id="slipTime">—</span>
+        </div>
+
+        <div class="slip-row slip-status" id="slipStatus">
+          Waiting for symptoms…
+        </div>
+
+        <div class="meter-row">
+          <div class="meter-track">
+            <div class="meter-fill" id="meterFill" style="width:0%"></div>
+          </div>
+          <div class="meter-value"><span id="meterPct">0</span>%<span class="meter-label">match</span></div>
+        </div>
+
+        <div class="slip-divider"></div>
+
+        <div class="slip-section" id="diseaseSection" hidden>
+          <div class="slip-field-label">Likely condition</div>
+          <div class="slip-disease" id="diseaseName">—</div>
+        </div>
+
+        <div class="slip-section" id="descSection" hidden>
+          <div class="slip-field-label">Description</div>
+          <p class="slip-desc" id="descText"></p>
+        </div>
+
+        <div class="slip-section" id="precSection" hidden>
+          <div class="slip-field-label">Precautions</div>
+          <ol class="slip-precautions" id="precList"></ol>
+        </div>
+
+        <div class="slip-footer">
+          Not a medical diagnosis. Consult a physician for clinical care.
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
